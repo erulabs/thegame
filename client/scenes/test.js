@@ -23,9 +23,9 @@ class TestScene {
       'assets/crate.png',
       'assets/crate2.png',
       'assets/crate.png',
-      'assets/crate.png',
+      'assets/crate2.png',
       'assets/side.png',
-      'assets/side.png'
+      'assets/crate2.png'
     ];
 
     const cubemap = THREE.ImageUtils.loadTextureCube(skyimgs); // load textures
