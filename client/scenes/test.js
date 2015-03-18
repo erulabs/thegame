@@ -20,12 +20,12 @@ class TestScene {
 
     ////////// SKYBOX ////////////////////////
     const skyimgs = [
-      'assets/crate.png',
-      'assets/crate2.png',
-      'assets/crate.png',
+      'assets/side.png',
+      'assets/side.png',
+      'assets/side.png',
       'assets/crate2.png',
       'assets/side.png',
-      'assets/crate2.png'
+      'assets/side.png'
     ];
 
     const cubemap = THREE.ImageUtils.loadTextureCube(skyimgs); // load textures
