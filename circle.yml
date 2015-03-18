@@ -31,6 +31,6 @@ deployment:
       - sed -i -e 's/\/build//' .gitignore
       - git add -A
       - git commit -m 'autopublish to staging'
-      - git push erulabs master:staging
+      - git push -f erulabs master:staging
       - "rsync -a doc thegame@erulabs.com:"
       - ssh thegame@erulabs.com "sudo /usr/bin/salt \* state.sls thegame"
