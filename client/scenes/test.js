@@ -20,9 +20,9 @@ class TestScene {
 
     ////////// SKYBOX ////////////////////////
     const skyimgs = [
-      'assets/side.png',
-      'assets/side.png',
-      'assets/side.png',
+      'assets/crate.png',
+      'assets/crate2.png',
+      'assets/crate.png',
       'assets/crate.png',
       'assets/side.png',
       'assets/side.png'

@@ -28,10 +28,9 @@ deployment:
       - git config user.email "autopusher@circleci.erulabs.com"
       - git config --global user.name "CircleCI"
       - git remote add erulabs thegame@erulabs.com:thegame.git
-      - git checkout -b staging
       - sed -i -e 's/\/build//' .gitignore
       - git add -A
       - git commit -m 'autopublish to staging'
-      - git push -f erulabs staging
+      - git push erulabs master:staging
       - "rsync -a doc thegame@erulabs.com:"
       - ssh thegame@erulabs.com "sudo /usr/bin/salt \* state.sls thegame"
