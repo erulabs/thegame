@@ -45,9 +45,11 @@ class TestScene {
 
     // create skybox mesh
     const skybox = new THREE.Mesh(
-      new THREE.CubeGeometry(1000, 1000, 1000),
+      new THREE.BoxGeometry( 500, 400, 500, 1, 1, 1 ),
       skyBoxMaterial
     );
+
+    skybox.position.z = 0;
 
     // FLOOR
     const materials = [

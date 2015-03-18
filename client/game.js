@@ -40,7 +40,7 @@ class GameClient {
     this.gameTaskQueue = [];
 
     // create a camera so we can see the scene
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1100);
     // create a renderer for our scene
     this.renderer = new THREE.WebGLRenderer();
 
@@ -55,6 +55,8 @@ class GameClient {
     // Limit OrbitControls to sane angles to prevent looking at the bottom of the map.
     this.controls.minPolarAngle = Math.PI / 8;
     this.controls.maxPolarAngle = Math.PI / 2.2;
+    this.controls.minDistance = 50;
+    this.controls.maxDistance = 250;
 
     // set the size of the renderer
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -66,10 +68,10 @@ class GameClient {
     // TODO: Test aspect ratio on different devices...
     // We may have to write some code that puts "black bars"
     // on the top or bottom of the screen to preserve aspect ratio
-    window.addEventListener('resize', function windowResizeEvent () {
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
-      this.camera.aspect = window.innerWidth / window.innerHeight;
-      this.camera.updateProjectionMatrix();
+    window.addEventListener('resize', function () {
+      self.renderer.setSize(window.innerWidth, window.innerHeight);
+      self.camera.aspect = window.innerWidth / window.innerHeight;
+      self.camera.updateProjectionMatrix();
     });
 
     /**
