@@ -63,7 +63,6 @@
   },
   "dependencies": {
     "express": "^4.12.2",
-    "github-webhook": "^0.2.0",
     "pm2": "^0.12.7",
     "request": "^2.53.0",
     "socket.io": "^1.3.5",

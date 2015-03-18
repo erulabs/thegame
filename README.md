@@ -37,22 +37,22 @@ The games datastore - where all static information is kept. The API is responsib
 The API codebase speaks HTTP powered by the NodeJS library [express.js](http://expressjs.com/). For the database backend it will use MongoDB, however in local development mode, it will use LevelDB. The idea behind this is that LevelDB can by run and managed by our development instance itself - making getting started developing a lot easier. However, installing MongoDB isn't that difficult either :)
 
 ## Client
-Documentation: http://thegame.erulabs.com/doc/client/
+Documentation: http://thegame.erulabs.com/doc/client/ (username: 'thegame', password: '123qweasd')
 
 Almost all of the actual "Game" lives here, which is deceptive because there is also a project called "Game". However, this is _everything_ that is sent to the browser. This includes _all_ HTML, CSS, UI, Models, Assets, Textures, etc. We layer on plenty of features here - LESS instead of CSS, Jade instead of HTML, image compression, added features to enhance browsers JavaScript support, etc. `gulp` will build this for you and compiled into the "build" directory.
 
 ## Dispatcher
-Documentation: http://thegame.erulabs.com/doc/dispatcher/
+Documentation: http://thegame.erulabs.com/doc/dispatcher/ (username: 'thegame', password: '123qweasd')
 
 The dispatcher is a fairly small codebase compaired to the other projects. It's only job is to register with the API and spawn instances of the "Game" server. It provides game server instances to the API for which the API will direct users to. It's only real job is the managment of Game server instances.
 
 ## Game
-Documentation: http://thegame.erulabs.com/doc/game/
+Documentation: http://thegame.erulabs.com/doc/game/ (username: 'thegame', password: '123qweasd')
 
 The game server instance - this is a process which creates a TCP socket which is connected to by the users browser and handles the realtime communication between users. It does rule checking, etc. When the "round" ends, the game server is destroyed and its final state/stats exported to the API for long term storage.
 
 ## Shared
-Documentation: http://thegame.erulabs.com/doc/shared/
+Documentation: http://thegame.erulabs.com/doc/shared/ (username: 'thegame', password: '123qweasd')
 
 The shared codebase is for two things:
 
