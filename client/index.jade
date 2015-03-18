@@ -1,0 +1,10 @@
+doctype html
+html(lang="en")
+  head
+    title Eru's Game
+    meta(charset="UTF-8")
+    link(rel="stylesheet", href=assetURL + 'assets/bundle.css')
+  body(data-ng-app="thegame")
+    include ./views/login.jade
+    script(type='text/javascript', src=assetURL + 'assets/vendor.js')
+    script(type='text/javascript', src=assetURL + 'assets/client.js')

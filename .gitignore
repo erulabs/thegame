@@ -1,0 +1,10 @@
+/node_modules
+.DS_Store
+newrelic.js
+*.sublime-workspace
+tmp
+tmp/*.json
+tmp/*.pid
+npm-debug.log
+/build
+/doc
