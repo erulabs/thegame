@@ -17,6 +17,8 @@
   "node": true,
   "mocha": true,
   "predef": [
-    "expect"
+    "expect",
+    "global",
+    "module"
   ]
 }

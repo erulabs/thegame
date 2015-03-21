@@ -38,8 +38,8 @@
   },
   "homepage": "https://github.com/erulabs/thegame",
   "devDependencies": {
-    "babelify": "^5.0.4",
-    "browserify": "^9.0.3",
+    "babel-core": "^4.7.16",
+    "babel-loader": "^4.2.0",
     "chai": "^2.1.1",
     "connect-modrewrite": "^0.7.11",
     "gulp": "^3.8.11",
@@ -50,16 +50,17 @@
     "gulp-develop-server": "^0.4.0",
     "gulp-exec": "^2.1.1",
     "gulp-jade": "^1.0.0",
-    "gulp-jshint": "^1.9.2",
-    "gulp-less": "^3.0.1",
+    "gulp-jshint": "^1.9.4",
+    "gulp-less": "^3.0.2",
     "gulp-rename": "^1.2.0",
     "gulp-watch": "^4.1.1",
+    "gulp-webpack": "^1.3.0",
     "jsdoc": "git+http://github.com/jsdoc3/jsdoc",
     "jshint": "^2.6.3",
     "jshint-stylish": "^1.0.1",
     "mocha": "^2.2.1",
     "run-sequence": "^1.0.2",
-    "vinyl-source-stream": "^1.1.0"
+    "webpack": "^1.7.3"
   },
   "dependencies": {
     "express": "^4.12.2",

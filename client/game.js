@@ -3,6 +3,7 @@
 
 /** load user model */
 // const User = require('./models/User.js');
+/** Interval in MS between game logic ticks */
 const GAME_TICK_INTERVAL = 200;
 global.UI = angular.module('thegame', ['ngCookies', 'ui.bootstrap']);
 
@@ -10,8 +11,8 @@ global.UI = angular.module('thegame', ['ngCookies', 'ui.bootstrap']);
  * Represents a GameClient.
  * @constructor
  */
-class GameClient {
-  /** function that constructs the GameClient object */
+ class GameClient {
+  /** @namespace */
   constructor() {
     let self = this;
 

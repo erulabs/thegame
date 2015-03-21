@@ -40,17 +40,15 @@ const gulp = require('gulp'),
   jade = require('gulp-jade'),
   less = require('gulp-less'),
   jshint = require('gulp-jshint'),
-  browserify = require('browserify'),
-  vinyl = require('vinyl-source-stream'),
   rename = require('gulp-rename'),
   modRewrite = require('connect-modrewrite'),
   concat = require('gulp-concat'),
   clean = require('gulp-clean'),
   seq = require('run-sequence'),
   exec = require('gulp-exec'),
-  babelify = require('babelify'),
   babel = require('gulp-babel'),
-  watch = require('gulp-watch');
+  watch = require('gulp-watch'),
+  webpack = require('gulp-webpack');
 
 let apiService, dispatcherService;
 
@@ -109,34 +107,31 @@ gulp.task('clean', function () {
 });
 
 gulp.task('jsdoc:client', function () {
-  // Browserify seems to break this for now.. TODO...
   let terminal = spawn('bash');
-  terminal.stdin.write([IOJS, JSDOC, 'build/client/assets/client.js', '-d doc/client'].join(' '));
+  terminal.stdin.write([
+    IOJS, JSDOC,
+    'client/*.js', 'client/models/*.js', 'client/controllers/*.js', 'client/scenes/*.js',
+    '-d doc/client'].join(' '));
   terminal.stdin.end();
 });
 gulp.task('jsdoc:api', function () {
   let terminal = spawn('bash');
-  terminal.stdin.write([IOJS, JSDOC, 'build/api/*.js', 'build/api/**/*.js', '-d doc/api'].join(' '));
+  terminal.stdin.write([IOJS, JSDOC, 'api/*.js', 'api/*/*.js', '-d doc/api'].join(' '));
   terminal.stdin.end();
 });
 gulp.task('jsdoc:game', function () {
   let terminal = spawn('bash');
-  terminal.stdin.write([IOJS, JSDOC, 'build/game/*.js', 'build/game/**/*.js', '-d doc/game'].join(' '));
+  terminal.stdin.write([IOJS, JSDOC, 'game/*.js', 'game/*/*.js', '-d doc/game'].join(' '));
   terminal.stdin.end();
 });
 gulp.task('jsdoc:shared', function () {
   let terminal = spawn('bash');
-  terminal.stdin.write([IOJS, JSDOC, 'build/shared/*.js', 'build/shared/**/*.js', '-d doc/shared'].join(' '));
+  terminal.stdin.write([IOJS, JSDOC, 'shared/*.js', 'shared/*/*.js', '-d doc/shared'].join(' '));
   terminal.stdin.end();
 });
 gulp.task('jsdoc:dispatcher', function () {
   let terminal = spawn('bash');
-  terminal.stdin.write([
-    IOJS, JSDOC,
-    'build/dispatcher/*.js',
-    'build/dispatcher/**/*.js',
-    '-d doc/dispatcher'
-  ].join(' '));
+  terminal.stdin.write([IOJS, JSDOC, 'dispatcher/*.js', 'dispatcher/*/*.js', '-d doc/dispatcher'].join(' '));
   terminal.stdin.end();
 });
 gulp.task('jsdoc', ['jsdoc:client', 'jsdoc:api', 'jsdoc:game', 'jsdoc:dispatcher', 'jsdoc:shared']);
@@ -189,19 +184,28 @@ gulp.task('jade', function () {
     .pipe(connect.reload());
 });
 
-gulp.task('browserify', function () {
-  browserify()
-    .transform(babelify)
-    .require('./client/index.js', { entry: true })
-    .bundle()
+let WEBPACK_OPTIONS = {
+  module: {
+    loaders: [
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
+    ]
+  },
+  output: {
+    filename: 'bundle.js'
+  }
+};
+
+gulp.task('webpack:client', function () {
+  gulp.src('./client/index.js')
+    .pipe(webpack(WEBPACK_OPTIONS))
     .on('error', function (err) {
       console.log(err.toString());
       this.emit('end');
     })
-    .pipe(vinyl('client.js'))
     .pipe(gulp.dest('build/client/assets'))
     .pipe(connect.reload());
 });
+gulp.task('webpack', ['webpack:client']);
 
 gulp.task('babel:api', function () {
   return gulp.src('api/**/*')
@@ -338,7 +342,7 @@ let defaultTasks = [
   'less',
   'babel',
   'jade',
-  'browserify',
+  'webpack',
   'lint'];
 
 gulp.task('default', function () {
@@ -351,6 +355,7 @@ gulp.task('test', function () {
 
 gulp.task('watch', function () {
   seq('clean', defaultTasks, 'test', [
+    'jsdoc',
     'api:start',
     'dispatcher:start',
     'client:start'
@@ -363,7 +368,7 @@ gulp.task('watch', function () {
       'dispatcher:start',
       'jsdoc:dispatcher']);
     });
-    watch(clientFiles, function () { seq(['lint', 'browserify', 'jsdoc:client']); });
+    watch(clientFiles, function () { seq(['lint', 'webpack:client', 'jsdoc:client']); });
     watch(lessFiles, function () { seq(['less']); });
     watch(jadeFiles, function () { seq(['jade']); });
     watch(['./spec/api.js'], function () { seq(['test:api']); });
