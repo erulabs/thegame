@@ -7,4 +7,8 @@ tmp/*.json
 tmp/*.pid
 npm-debug.log
 /build
-/doc
+/doc/api
+/doc/client
+/doc/dispatcher
+/doc/shared
+/doc/game
