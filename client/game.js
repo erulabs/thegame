@@ -7,17 +7,16 @@
 const GAME_TICK_INTERVAL = 200;
 global.UI = angular.module('thegame', ['ngCookies', 'ui.bootstrap']);
 
-/**
- * Represents a GameClient.
- * @constructor
- */
- class GameClient {
-  /** @namespace */
+/** Represents a GameClient. */
+class GameClient {
+  /** GameClient Constructor */
   constructor() {
     let self = this;
 
-    /** The registry for scenes - due to the usage of Browserify
-     * one cannot use dynamic paths - instead, include any scene files here */
+    /**
+     * The registry for scenes - due to the usage of Browserify
+     * one cannot use dynamic paths - instead, include any scene files here
+     */
     this.sceneRegistry = {
       'login': require('./scenes/login.js'),
       'test': require('./scenes/test.js')
@@ -40,35 +39,37 @@ global.UI = angular.module('thegame', ['ngCookies', 'ui.bootstrap']);
     /** The queue of tasks to run each game tick */
     this.gameTaskQueue = [];
 
-    // create a camera so we can see the scene
+    /** create a camera so we can see the scene */
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1100);
-    // create a renderer for our scene
+    /** create a renderer for our scene */
     this.renderer = new THREE.WebGLRenderer();
 
-    // Set defaults camera position
+    /** Set defaults camera position */
     this.camera.position.z = 80;
     this.camera.position.x = 80;
     this.camera.position.y = 80;
 
-    // add THREEjs OrbitControls to allow user to zoom and spin the board
+    /** add THREEjs OrbitControls to allow user to zoom and spin the board */
     this.controls = new THREE.OrbitControls(this.camera);
 
-    // Limit OrbitControls to sane angles to prevent looking at the bottom of the map.
+    /** Limit OrbitControls to sane angles to prevent looking at the bottom of the map. */
     this.controls.minPolarAngle = Math.PI / 8;
     this.controls.maxPolarAngle = Math.PI / 2.2;
     this.controls.minDistance = 50;
     this.controls.maxDistance = 250;
 
-    // set the size of the renderer
+    /** set the size of the renderer */
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    // append renderer to the documents body
+    /** append renderer to the documents body */
     document.body.appendChild(this.renderer.domElement);
 
-    // Resize the renderer and reproject the camera
-    // when the browser window resizes
-    // TODO: Test aspect ratio on different devices...
-    // We may have to write some code that puts "black bars"
-    // on the top or bottom of the screen to preserve aspect ratio
+    /**
+     * Resize the renderer and reproject the camera
+     * when the browser window resizes
+     * TODO: Test aspect ratio on different devices...
+     * We may have to write some code that puts "black bars"
+     * on the top or bottom of the screen to preserve aspect ratio
+     */
     window.addEventListener('resize', function () {
       self.renderer.setSize(window.innerWidth, window.innerHeight);
       self.camera.aspect = window.innerWidth / window.innerHeight;
@@ -76,12 +77,12 @@ global.UI = angular.module('thegame', ['ngCookies', 'ui.bootstrap']);
     });
 
     /**
-     * @description
      * The core render loop - is called as fast as the browser can call it
      * powered by the requestAnimationFrame API
+     * @constructor
      * @returns {undefined}
      */
-    function render () {
+    var render = function () {
       // get the frame to render
       requestAnimationFrame(render);
       // render scene as seen through the camera
@@ -91,7 +92,7 @@ global.UI = angular.module('thegame', ['ngCookies', 'ui.bootstrap']);
         func.call(self);
       });
       self.sceneData.render();
-    }
+    };
     /** Begin rendering */
     render();
 

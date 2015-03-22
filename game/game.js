@@ -1,19 +1,21 @@
 'use strict';
 
 // Load libraries
-const socketio = require('socket.io');
+const Socketio = require('socket.io');
 
 /**
  * Represents a GameServer.
  * @constructor
  */
 class GameServer {
-  constructor(NODE_ENV, API_PORT, GAME_PORT) {
-    let io = socketio(GAME_PORT);
-    console.log(`Game Server starting. Env: "${NODE_ENV}". Listening on port: ${GAME_PORT}`);
+  constructor(NODE_ENV, API_PORT) {
+    let self = this;
+    this.NODE_ENV = NODE_ENV;
+    this.API_PORT = API_PORT;
+    self.io = new Socketio();
 
-    io.on('connection', function () {
-      io.emit('init', { test: 'foobar' });
+    self.io.on('connection', function () {
+      self.io.emit('init', { test: 'foobar' });
     });
   }
 
@@ -22,8 +24,10 @@ class GameServer {
    * Starts the GameServers SocketIO instance
    * @returns {undefined}
    */
-  listen() {
-
+  listen(GAME_PORT) {
+    let self = this;
+    console.log(`Game Server starting. Env: "${this.NODE_ENV}". Listening on port: ${GAME_PORT}`);
+    self.io.attach(GAME_PORT);
   }
 }
 

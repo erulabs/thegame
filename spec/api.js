@@ -4,28 +4,24 @@ console.log('API TESTS STARTING:');
 
 global.expect = require('chai').expect;
 
-// let User = require(__dirname + '/../build/api/models/User.js');
+let User = require(__dirname + '/../build/api/models/User.js'),
+  base = require(__dirname + '/../build/api/models/base.js');
 
 describe('API', function () {
-  // describe('ModelGenerator', function () {
-  //   it('Should be a function', function () {
-  //     expect(Model).to.be.a('function');
-  //   });
-  //   it('Should generate a class', function () {
-  //     expect(Model('foobar')).to.be.a('function');
-  //   });
-  //   it('Which creates happy little objects', function () {
-  //     expect(new (Model('foobar'))({
-  //       someSpec: 'goes here'
-  //     })).to.be.a('object');
-  //   });
-  // });
+  describe('Base model', function () {
+    it('should have the base model functionality', function () {
+      expect(base).to.be.a('object');
+      expect(base._extend).to.be.a('function');
+      expect(base.model.save).to.be.a('function');
+    });
+  });
   describe('Models', function () {
     describe('Users', function () {
-      // it('Should inherit things from Model', function () {
-      //   let myUser = new User();
-      //   expect(myUser.find).to.be.a('function');
-      // });
+      it('should create without issue', function () {
+        let myUser = new User();
+        expect(myUser.username).to.be.a('string');
+        expect(myUser.save).to.be.a('function');
+      });
     });
   });
 });
