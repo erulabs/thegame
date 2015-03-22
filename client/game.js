@@ -56,7 +56,7 @@ class GameClient {
     this.controls.minPolarAngle = Math.PI / 8;
     this.controls.maxPolarAngle = Math.PI / 2.2;
     this.controls.minDistance = 50;
-    this.controls.maxDistance = 250;
+    this.controls.maxDistance = 150;
 
     /** set the size of the renderer */
     this.renderer.setSize(window.innerWidth, window.innerHeight);
