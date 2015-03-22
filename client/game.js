@@ -42,7 +42,9 @@ class GameClient {
     /** create a camera so we can see the scene */
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1100);
     /** create a renderer for our scene */
-    this.renderer = new THREE.WebGLRenderer();
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: true
+    });
 
     /** Set defaults camera position */
     this.camera.position.z = 80;
@@ -55,8 +57,8 @@ class GameClient {
     /** Limit OrbitControls to sane angles to prevent looking at the bottom of the map. */
     this.controls.minPolarAngle = Math.PI / 8;
     this.controls.maxPolarAngle = Math.PI / 2.2;
-    this.controls.minDistance = 50;
-    this.controls.maxDistance = 150;
+    this.controls.minDistance = 75;
+    this.controls.maxDistance = 200;
 
     /** set the size of the renderer */
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -144,6 +146,7 @@ class GameClient {
       // TODO: Cleanup all objects here...
       console.log(`Beginning scene ${sceneKey}`);
       this.sceneData = new this.sceneRegistry[sceneKey](this);
+      this.sceneData.init();
     }
   }
 }

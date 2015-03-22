@@ -1,7 +1,10 @@
+/* global angular, document */
 'use strict';
 
 const GameClientLib = require('./game.js');
 
 global.GAME = new GameClientLib();
 
-global.GAME.beginScene('test');
+angular.element(document).ready(function () {
+  global.GAME.beginScene('login');
+});

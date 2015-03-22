@@ -1,2 +1,9 @@
-div(data-ng-controller="login", data-ng-show="visible")
-  div Hello
+div(data-ng-controller="LoginCtrl")
+  script#loginModalContent(type="text/ng-template")
+    .modal-header
+      h3.modal-title Login to TheGame
+    .modal-body
+      div Body
+    .modal-footer
+      button.btn.btn-primary(data-ng-click="login()") Login
+      button.btn.btn-default(data-ng-click="register()") Register

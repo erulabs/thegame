@@ -24,11 +24,11 @@ const gameFiles = [
   './client/models/*.js',
   './client/scenes/*.js'
 ], lessFiles = [
-  './client/index.less',
-  './client/views/*.less'
+  './client/style/index.less',
+  './client/style/bootstrap/*.less'
 ], jadeFiles = [
-  './client/style/index.jade',
-  './client/style/bootstrap/*.jade'
+  './client/index.jade',
+  './client/views/*.jade'
 ];
 
 const allJSFiles = gameFiles.concat(apiFiles, clientFiles, dispatcherFiles, ['./spec/*.js', './gulpfile.js']);

@@ -9,6 +9,8 @@ class TestScene {
   constructor() {
     this.name = 'test';
     this.objects = {};
+  }
+  init() {
     // create a geometry for the placeholder cube
     const geometry = new THREE.BoxGeometry( 10, 10, 10, 10, 10, 1 );
     // create THREEjs mesh from geometry and material
@@ -77,7 +79,7 @@ class TestScene {
        })
     ];
     const floor = new THREE.Mesh(
-        new THREE.BoxGeometry( 100, 3, 100, 1, 1, 1 ),
+        new THREE.BoxGeometry( 200, 3, 200, 1, 1, 1 ),
         new THREE.MeshFaceMaterial( materials ) );
 
     // testing cube using floor objects and materials
