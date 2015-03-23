@@ -1,4 +1,4 @@
-/* global angular, io, THREE, document, requestAnimationFrame, window */
+/* global angular, io, THREE, document, requestAnimationFrame, window, location */
 'use strict';
 
 /** load user model */
@@ -6,6 +6,13 @@
 /** Interval in MS between game logic ticks */
 const GAME_TICK_INTERVAL = 200;
 global.UI = angular.module('thegame', ['ngCookies', 'ui.bootstrap']);
+
+global.UI.getParameterByName = function (name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
+      results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
 
 /** Represents a GameClient. */
 class GameClient {

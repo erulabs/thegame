@@ -10,11 +10,14 @@ let instance = new API({
 });
 
 describe('API', function () {
+  instance.init();
   it('should create without issue', function () {
     expect(instance.listen).to.be.a('function');
+    expect(instance.attachDB).to.be.a('function');
+    expect(instance.models).to.be.a('object');
+    expect(instance.controllers).to.be.a('object');
   });
   it('should have loaded the User controller and model', function () {
-    instance.init();
     expect(instance.models.User).to.be.a('function');
     expect(instance.controllers.User).to.be.a('object');
   });

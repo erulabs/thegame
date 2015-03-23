@@ -1,4 +1,4 @@
-/* global UI, GAME */
+/* global UI, GAME, md5 */
 'use strict';
 
 /**
@@ -47,15 +47,28 @@ UI.controller('LoginCtrl', function ($scope, $modal) {
 });
 
 UI.controller('LoginWindowCtrl', function ($scope, $modal, $modalInstance, $http) {
+  $scope.error = UI.getParameterByName('loginError');
   $scope.login = function () {
-    $modalInstance.close();
+    if ($scope.email === undefined || $scope.password === undefined) {
+      $scope.error = 'Please enter an email and password';
+      return false;
+    }
+    if ($scope.password.length < 5) {
+      $scope.error = 'Password need to be longer than 5 characters in length';
+      return false;
+    }
     $http.post('/api/user/login', {
-      username: $scope.username,
-      password: $scope.password
+      email: $scope.email,
+      // MD5 the password... We do this so that, even in local development
+      // or when mistakenly not using HTTPS, we'll still at least not -plaintext- passwords.
+      // Not perfect, but it's fully worth the small cost involved.
+      password: md5($scope.password)
     }).success(function (data, status) {
       console.log(status, data);
+      $scope.error = data;
+      //$modalInstance.close();
+      //global.GAME.beginScene('test');
     });
-    global.GAME.beginScene('test');
   };
   $scope.register = function () {
     $modalInstance.close();
