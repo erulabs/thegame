@@ -15,7 +15,7 @@
     "build": "iojs node_modules/gulp/bin/gulp",
     "start": "npm run restart:dispatcher && npm run restart:api",
     "watch": "iojs node_modules/gulp/bin/gulp watch",
-    "lint": "bash spec/lint.sh"
+    "lint": "iojs node_modules/gulp/bin/gulp lint"
   },
   "config": {
     "CLIENT_PORT": 8080,

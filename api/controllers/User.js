@@ -1,4 +1,3 @@
-/* global API */
 'use strict';
 
 module.exports = function (API) {

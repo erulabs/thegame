@@ -6,7 +6,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development',
   DISPATCHER_PORT = process.env.npm_package_config_DISPATCHER_PORT || 8001,
   LIVERELOAD = process.env.npm_package_config_LIVERELOAD || true,
   ASSET_URL = process.env.npm_package_config_ASSET_URL || '/',
-  IOJS_OPTIONS = ['--harmony_classes', '--use_strict', '--es_staging'],
+  IOJS_OPTIONS = ['--use_strict'],
   IOJS = `iojs ${IOJS_OPTIONS.join(' ')}`,
   MOCHA = 'node_modules/mocha/bin/mocha --harmony',
   JSDOC = 'node_modules/jsdoc/jsdoc.js';
@@ -58,7 +58,7 @@ let apiService, dispatcherService;
 
 gulp.task('api:start', function () {
   if (apiService) { apiService.kill(); }
-  apiService = spawn('iojs', IOJS_OPTIONS.concat(['api/index.js']), {
+  apiService = spawn('iojs', IOJS_OPTIONS.concat(['build/api/index.js']), {
     stdio: 'inherit',
     env: {
       NODE_ENV: NODE_ENV,
@@ -79,7 +79,7 @@ gulp.task('dispatcher:start', function () {
   if (dispatcherService) {
     dispatcherService.kill();
   }
-  dispatcherService = spawn('iojs', IOJS_OPTIONS.concat(['dispatcher/index.js']), {
+  dispatcherService = spawn('iojs', IOJS_OPTIONS.concat(['build/dispatcher/index.js']), {
     stdio: 'inherit',
     env: {
       NODE_ENV: NODE_ENV,
