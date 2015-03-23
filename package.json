@@ -5,17 +5,18 @@
   "main": "server/index.js",
   "scripts": {
     "test": "iojs node_modules/mocha/bin/mocha --harmony spec/index.js",
-    "stop:api": "iojs node_modules/pm2/bin/pm2 stop api || true",
-    "start:api": "iojs node_modules/pm2/bin/pm2 start build/api --name api",
+    "stop:api": "node node_modules/pm2/bin/pm2 stop api || true",
+    "start:api": "node node_modules/pm2/bin/pm2 start build/api --name api",
     "restart:api": "npm run stop:api && npm run start:api",
-    "stop:dispatcher": "iojs node_modules/pm2/bin/pm2 stop dispatcher || true",
-    "start:dispatcher": "iojs node_modules/pm2/bin/pm2 start build/dispatcher --name dispatcher",
+    "stop:dispatcher": "node node_modules/pm2/bin/pm2 stop dispatcher || true",
+    "start:dispatcher": "node node_modules/pm2/bin/pm2 start build/dispatcher --name dispatcher",
     "restart:dispatcher": "npm run stop:dispatcher && npm run start:dispatcher",
-    "client:start": "iojs node_modules/gulp/bin/gulp client:start",
-    "build": "iojs node_modules/gulp/bin/gulp",
+    "client:start": "node node_modules/gulp/bin/gulp client:start",
+    "build": "node node_modules/gulp/bin/gulp",
     "start": "npm run restart:dispatcher && npm run restart:api",
-    "watch": "iojs node_modules/gulp/bin/gulp watch",
-    "lint": "iojs node_modules/gulp/bin/gulp lint"
+    "watch": "node node_modules/gulp/bin/gulp watch",
+    "develop": "npm run watch",
+    "lint": "node node_modules/gulp/bin/gulp lint"
   },
   "config": {
     "CLIENT_PORT": 8080,
@@ -63,7 +64,7 @@
     "webpack": "^1.7.3"
   },
   "dependencies": {
-    "bcrypt": "^0.8.1",
+    "bcryptjs": "^2.1.0",
     "body-parser": "^1.12.2",
     "express": "^4.12.2",
     "mongoose": "^3.8.25",

@@ -9,7 +9,7 @@ class Api {
   constructor() {
     this.odm = require('mongoose');
     this.express = require('express');
-    this.bcrypt = require('bcrypt');
+    this.bcrypt = require('bcryptjs');
 
     this.app = this.express();
     let bodyParser = require('body-parser');

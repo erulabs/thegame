@@ -4,26 +4,35 @@ TheGame [![Circle CI](https://circleci.com/gh/erulabs/thegame/tree/master.png?ci
 # About
 An online, browser-based competive strategy game written by Seandon Mooy, Jeremy Miller, Dustin Lloyd, and Matt Ellsworth. TheGame is written entirely in JavaScript ES6. It is composed of a number of sub-projects. See the Projects section.
 
+A staging version of thegame should always be deployed at [thegame.erulabs.com](http://thegame.erulabs.com/), with documentation available at [thegame.erulabs.com/doc](http://thegame.erulabs.com/doc) (username: 'thegame', password: '123qweasd')
+
+Collaboration is done via [waffle.io](https://waffle.io/erulabs/thegame) and [Slack.com](https://themamble.slack.com/messages/general/)
+
 # Developing
 The project is powered by IO.JS, and the build system we're using is [gulp.js](http://gulpjs.com/). To get the components required:
 
 ## Installing
-1. Download and install the project requirements:
-  a. [Download IO.JS](https://iojs.org)
-  b. [MongoDB](https://www.mongodb.org/downloads)
-2. If you're a Windows user, I strongly recommend [GitHub for Windows](https://windows.github.com/) - use the "Git Shell" and ensure the command `node` works properly.
-3. Install Gulp globally, that's `sudo npm install -g gulp` (leave sudo off if you're a Windows user)
-4. Clone the project (obviously) locally (`git clone...`)
-5. `cd` into the projects directory and install all the required dependancies: `npm install`.
-6. The project makes use of "livereload" for easier editing. I use the Chrome plugin, but supposedly it works for Firefox and other browsers as well. That said, [Chrome Canary](https://www.google.com/chrome/browser/canary.html) will _crush_ all other browsers in terms of local 3D performance.
-7. We also use [EditorConfig](http://editorconfig.org/) - Make sure to install it in whatever editor you prefer.
-8. If you use SublimeText, go ahead and install "SublimeLinter" and the SublimeLinter-jshint plugin. This will help you catch coding mistakes much more quickly :)
-9. Make sure to use [waffle.io](https://waffle.io/erulabs/thegame) to track your work :D
+1. [Download the latest io.js](https://iojs.org)
+2. `npm install`
+
+That's all  folks!
 
 ## Working
-Now that you're installed, you can boot the entire project into development mode with `gulp watch`. Note that `gulp` alone builds the project ready for production, but will not actually launch it in a development-friendly way.
+A. Boot into development: `npm run develop`, browse to: [localhost:8080](http://localhost:8080)
+B. Build project: `npm run build`
+C. Run tests: `npm run test`
+D. Audit your code: `npm run lint`
 
-You'll see that `gulp watch` starts a number of services. By default, the local development server at [port 8080](http://localhost:8080) is the development web server. 8081 is the API (which the development server proxies to in the case of web requests to :8080/api), and 8082 is a game dispatcher and it should start a game server instance on port 8083.
+## JS development tips
+1. Use [Chrome Canary](https://www.google.com/chrome/browser/canary.html) and install the [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) plugin
+2. Use [SublimeText3](http://www.sublimetext.com/3), [PackageControl](https://packagecontrol.io/installation)
+3. Install the SublimeText plugins "Gitgutter", "SublimeLinter", "SublimeLinter-jshint" and "EditorConfig"
+
+## Windows tips
+1. If you're a Windows user, I strongly recommend [GitHub for Windows](https://windows.github.com/) - use the "Git Shell" and ensure the command `node` works properly.
+
+## Things to note:
+1. In development, we use [MongoLab](https://mongolab.com), but you can and should install MongoDB and set things up to test locally. The MongoLab database is just a free account and is only there so that it's very simple to get hacking on things without the complexity of Mongo.
 
 # Projects
 ## API
