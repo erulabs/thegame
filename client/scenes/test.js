@@ -11,6 +11,7 @@ class TestScene {
     this.objects = {};
   }
   init() {
+    GAME.controls.enabled = true;
     // create a geometry for the placeholder cube
     const geometry = new THREE.BoxGeometry( 10, 10, 10, 10, 10, 1 );
     // create THREEjs mesh from geometry and material

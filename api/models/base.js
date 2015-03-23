@@ -1,3 +1,4 @@
+/* global API, NODE_ENV */
 'use strict';
 
 /**
@@ -25,7 +26,7 @@ const BaseModel = {
      * @returns {Promise}
      */
     save: function () {
-      console.log(this.username);
+      console.log('api node_node', NODE_ENV);
     }
   }
 };

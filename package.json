@@ -59,6 +59,7 @@
     "jshint": "^2.6.3",
     "jshint-stylish": "^1.0.1",
     "mocha": "^2.2.1",
+    "readline": "0.0.7",
     "run-sequence": "^1.0.2",
     "webpack": "^1.7.3"
   },

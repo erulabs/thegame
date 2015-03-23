@@ -8,7 +8,9 @@ An online, browser-based competive strategy game written by Seandon Mooy, Jeremy
 The project is powered by IO.JS, and the build system we're using is [gulp.js](http://gulpjs.com/). To get the components required:
 
 ## Installing
-1. [Download IO.JS](https://iojs.org)
+1. Download and install the project requirements:
+  a. [Download IO.JS](https://iojs.org)
+  b. [MongoDB](https://www.mongodb.org/downloads)
 2. If you're a Windows user, I strongly recommend [GitHub for Windows](https://windows.github.com/) - use the "Git Shell" and ensure the command `node` works properly.
 3. Install Gulp globally, that's `sudo npm install -g gulp` (leave sudo off if you're a Windows user)
 4. Clone the project (obviously) locally (`git clone...`)

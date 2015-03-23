@@ -3,7 +3,23 @@ div(data-ng-controller="LoginCtrl")
     .modal-header
       h3.modal-title Login to TheGame
     .modal-body
-      div Body
+      form(method="post", action="/api/login", enctype='application/json')
+        .row
+          .form-group.col-md-6.col-md-offset-3
+            input(type="text", class="form-control", placeholder="Email", name='username', value="{{login.app.$cookies['x-chow-user']}}", data-ng-model="username")
+        .row
+          .form-group.col-md-6.col-md-offset-3
+            input(type="password", class="form-control", placeholder="Password", name='password', data-ng-model="password")
     .modal-footer
       button.btn.btn-primary(data-ng-click="login()") Login
       button.btn.btn-default(data-ng-click="register()") Register
+
+
+  script#registerModalContent(type="text/ng-template")
+    .modal-header
+      h3.modal-title Signup for TheGame
+    .modal-body
+      div Sorry, we're not accepting sign ups at this time
+      div Make sure to check back later!
+    .modal-footer
+      button.btn.btn-primary(data-ng-click="cancel()") Cancel

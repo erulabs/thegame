@@ -53,6 +53,7 @@ class GameClient {
 
     /** add THREEjs OrbitControls to allow user to zoom and spin the board */
     this.controls = new THREE.OrbitControls(this.camera);
+    this.controls.enabled = false;
 
     /** Limit OrbitControls to sane angles to prevent looking at the bottom of the map. */
     this.controls.minPolarAngle = Math.PI / 8;
@@ -85,8 +86,6 @@ class GameClient {
      * @returns {undefined}
      */
     var render = function () {
-      // get the frame to render
-      requestAnimationFrame(render);
       // render scene as seen through the camera
       self.renderer.render(self.scene, self.camera);
       // run renderFunctions
@@ -94,6 +93,8 @@ class GameClient {
         func.call(self);
       });
       self.sceneData.render();
+      // get the frame to render
+      requestAnimationFrame(render);
     };
     /** Begin rendering */
     render();

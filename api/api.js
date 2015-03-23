@@ -1,24 +1,29 @@
 /* global NODE_ENV */
 'use strict';
 
-const express = require('express'),
-  User = require('./models/User.js'),
-  testUser = new User();
-testUser.save();
-
 /**
  * Represents an API.
  * @constructor
  */
 class Api {
-  constructor(NODE_ENV) {
-    this.NODE_ENV = NODE_ENV;
+  constructor() {
+    let self = this;
+    global.API = self;
 
-    this.app = express();
+    this.express = require('express');
+    this.app = this.express();
 
-    this.app.get('/test', function (req, res) {
-      res.send('Hello testy world - Proof!');
+    this.models = {};
+    ['User'].forEach(function (model) {
+      self.models[model] = require('./models/' + model + '.js');
     });
+
+    this.controllers = {};
+    ['User'].forEach(function (controller) {
+      let Lib = require('./controllers/' + controller + '.js');
+      self.controllers[controller] = new Lib();
+    });
+
   }
   listen(LISTEN_PORT) {
     // Start services

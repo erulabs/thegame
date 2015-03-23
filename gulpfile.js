@@ -2,8 +2,8 @@
 
 const NODE_ENV = process.env.NODE_ENV || 'development',
   CLIENT_PORT = process.env.npm_package_config_CLIENT_PORT || 8080,
-  API_PORT = process.env.npm_package_config_API_PORT || 8081,
-  DISPATCHER_PORT = process.env.npm_package_config_DISPATCHER_PORT || 8082,
+  API_PORT = process.env.npm_package_config_API_PORT || 8000,
+  DISPATCHER_PORT = process.env.npm_package_config_DISPATCHER_PORT || 8001,
   LIVERELOAD = process.env.npm_package_config_LIVERELOAD || true,
   ASSET_URL = process.env.npm_package_config_ASSET_URL || '/',
   IOJS_OPTIONS = ['--harmony_classes', '--use_strict', '--es_staging'],
@@ -16,13 +16,15 @@ const gameFiles = [
   './game/models/*.js'
 ], apiFiles = [
   './api/*.js',
-  './api/models/*.js'
+  './api/models/*.js',
+  './api/controllers/*.js'
 ], dispatcherFiles = [
   './dispatcher/*.js'
 ], clientFiles = [
   './client/*.js',
   './client/models/*.js',
-  './client/scenes/*.js'
+  './client/scenes/*.js',
+  './client/controllers/*.js'
 ], lessFiles = [
   './client/style/index.less',
   './client/style/bootstrap/*.less'
@@ -35,8 +37,11 @@ const allJSFiles = gameFiles.concat(apiFiles, clientFiles, dispatcherFiles, ['./
 
 const gulp = require('gulp'),
   _ = require('underscore'),
+  fs = require('fs'),
   connect = require('gulp-connect'),
-  spawn = require('child_process').spawn,
+  child_process = require('child_process'),
+  spawn = child_process.spawn,
+  // nodeexec = child_process.exec,
   jade = require('gulp-jade'),
   less = require('gulp-less'),
   jshint = require('gulp-jshint'),
@@ -353,29 +358,50 @@ gulp.task('test', function () {
   seq('test:api', 'test:game');
 });
 
+//so the program will not close instantly
+
+//do something when app is closing
+
 gulp.task('watch', function () {
-  seq('clean', defaultTasks, 'test', [
-    'jsdoc',
-    'api:start',
-    'dispatcher:start',
-    'client:start'
-  ], function () {
-    watch(gameFiles, function () { seq('babel:game', ['test:game', 'lint', 'dispatcher:start', 'jsdoc:game']); });
-    watch(apiFiles, function () { seq('babel:api', ['test:api', 'lint', 'api:start', 'jsdoc:api']); });
-    watch(dispatcherFiles, function () { seq('babel:dispatcher', [
-      'test:dispatcher',
-      'lint',
-      'dispatcher:start',
-      'jsdoc:dispatcher']);
-    });
-    watch(clientFiles, function () { seq(['lint', 'webpack:client', 'jsdoc:client']); });
-    watch(lessFiles, function () { seq(['less']); });
-    watch(jadeFiles, function () { seq(['jade']); });
-    watch(['./spec/api.js'], function () { seq(['test:api']); });
-    watch(['./spec/game.js'], function () { seq(['test:game']); });
-    watch(['./spec/dispatcher.js'], function () { seq(['test:dispatcher']); });
-    watch(['./client/vendor/*.map'], function () { seq(['vendor_maps']); });
-    watch(['./client/vendor/*.js'], function () { seq(['vendor_bundle']); });
-    watch(['./client/assets/*'], function () { seq(['client_assets']); });
+  let mongoDB;
+  if (!fs.existsSync('./tmp')) { fs.mkdirSync('./tmp'); }
+  if (!fs.existsSync('./tmp/db')) { fs.mkdirSync('./tmp/db'); }
+  mongoDB = spawn('bash');
+  mongoDB.stdin.write('mongod --dbpath ./tmp/db');
+  mongoDB.stdin.end();
+  mongoDB.stdout.on('data', function (data) {
+    console.log('MongoDB:', data.toString());
+    if(data.toString().includes('waiting for connections')) {
+      seq('clean', defaultTasks, 'test', [
+        'jsdoc',
+        'api:start',
+        'dispatcher:start',
+        'client:start'
+      ], function () {
+        watch(gameFiles, function () { seq('babel:game', ['test:game', 'lint', 'dispatcher:start', 'jsdoc:game']); });
+        watch(apiFiles, function () { seq('babel:api', ['test:api', 'lint', 'api:start', 'jsdoc:api']); });
+        watch(dispatcherFiles, function () { seq('babel:dispatcher', [
+          'test:dispatcher',
+          'lint',
+          'dispatcher:start',
+          'jsdoc:dispatcher']);
+        });
+        watch(clientFiles, function () { seq(['lint', 'webpack:client', 'jsdoc:client']); });
+        watch(lessFiles, function () { seq(['less']); });
+        watch(jadeFiles, function () { seq(['jade']); });
+        watch(['./spec/api.js'], function () { seq(['test:api']); });
+        watch(['./spec/game.js'], function () { seq(['test:game']); });
+        watch(['./spec/dispatcher.js'], function () { seq(['test:dispatcher']); });
+        watch(['./client/vendor/*.map'], function () { seq(['vendor_maps']); });
+        watch(['./client/vendor/*.js'], function () { seq(['vendor_bundle']); });
+        watch(['./client/assets/*'], function () { seq(['client_assets']); });
+      });
+    } else if (data.toString().includes('dbexit')) {
+      console.log('MONGO HAS QUIT');
+      process.exit();
+    }
+  });
+  mongoDB.stderr.on('data', function (data) {
+    console.log('MongoDB err:', data.toString());
   });
 });
