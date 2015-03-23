@@ -4,24 +4,18 @@ console.log('API TESTS STARTING:');
 
 global.expect = require('chai').expect;
 
-let User = require(__dirname + '/../build/api/models/User.js'),
-  base = require(__dirname + '/../build/api/models/base.js');
+let API = require(__dirname + '/../build/api/api.js');
+let instance = new API({
+  NODE_ENV: 'test'
+});
 
 describe('API', function () {
-  describe('Base model', function () {
-    it('should have the base model functionality', function () {
-      expect(base).to.be.a('object');
-      expect(base._extend).to.be.a('function');
-      expect(base.model.save).to.be.a('function');
-    });
+  it('should create without issue', function () {
+    expect(instance.listen).to.be.a('function');
   });
-  describe('Models', function () {
-    describe('Users', function () {
-      it('should create without issue', function () {
-        let myUser = new User();
-        expect(myUser.username).to.be.a('string');
-        expect(myUser.save).to.be.a('function');
-      });
-    });
+  it('should have loaded the User controller and model', function () {
+    instance.init();
+    expect(instance.models.User).to.be.a('function');
+    expect(instance.controllers.User).to.be.a('object');
   });
 });

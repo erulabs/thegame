@@ -1,19 +1,20 @@
 'use strict';
 
-const BaseModel = require('./base.js'),
-  SharedUser = require(__dirname + '/../../shared/models/User.js');
+// const SharedUser = require(__dirname + '/../../shared/models/User.js');
 
-/**
- * Represents a User - supports authentication
- * This is a test of the auto-doc system
- * @constructor
- */
-class User extends SharedUser {
-  constructor() {
-    this.username = 'someValue';
-  }
-}
+module.exports = function (API) {
+  /**
+   * Represents a User - supports authentication
+   * This is a test of the auto-doc system
+   * @constructor
+   */
+  let Schema = API.odm.Schema({
+    name: String,
+    password: String
+  });
 
-BaseModel._extend(User);
+  let User = API.odm.model('User', Schema);
 
-module.exports = User;
+  return User;
+
+};
