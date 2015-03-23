@@ -9,8 +9,6 @@ A staging version of thegame should always be deployed at [thegame.erulabs.com](
 Collaboration is done via [waffle.io](https://waffle.io/erulabs/thegame) and [Slack.com](https://themamble.slack.com/messages/general/)
 
 # Developing
-The project is powered by IO.JS, and the build system we're using is [gulp.js](http://gulpjs.com/). To get the components required:
-
 ## Installing
 1. [Download the latest io.js](https://iojs.org)
 2. `npm install`
@@ -19,17 +17,21 @@ That's all  folks!
 
 ## Working
 A. Boot into development: `npm run develop`, browse to: [localhost:8080](http://localhost:8080)
+
 B. Build project: `npm run build`
+
 C. Run tests: `npm run test`
+
 D. Audit your code: `npm run lint`
 
 ## JS development tips
 1. Use [Chrome Canary](https://www.google.com/chrome/browser/canary.html) and install the [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) plugin
 2. Use [SublimeText3](http://www.sublimetext.com/3), [PackageControl](https://packagecontrol.io/installation)
 3. Install the SublimeText plugins "Gitgutter", "SublimeLinter", "SublimeLinter-jshint" and "EditorConfig"
+4. Install a [sexy font](https://github.com/adobe-fonts/source-code-pro/releases/tag/1.017R) for your terminal and SublimeText
 
 ## Windows tips
-1. If you're a Windows user, I strongly recommend [GitHub for Windows](https://windows.github.com/) - use the "Git Shell" and ensure the command `node` works properly.
+1. If you're a Windows user, I strongly recommend [GitHub for Windows](https://windows.github.com/) - use the "Git Shell" and ensure the command `node` works properly. After that, use [ConEMU](http://sourceforge.net/projects/conemu/) as a better shell - make sure it launches into the bash provided by GitHub for Windows (or git-scm also works).
 
 ## Things to note:
 1. In development, we use [MongoLab](https://mongolab.com), but you can and should install MongoDB and set things up to test locally. The MongoLab database is just a free account and is only there so that it's very simple to get hacking on things without the complexity of Mongo.
@@ -45,12 +47,12 @@ The games datastore - where all static information is kept. The API is responsib
 3. Matchmaking and assigning players to Game Server instances
 4. Maintaining a "Health Report" which describes the available number of Dispatchers and their available Game Server instances
 
-The API codebase speaks HTTP powered by the NodeJS library [express.js](http://expressjs.com/). For the database backend it will use MongoDB, however in local development mode, it will use LevelDB. The idea behind this is that LevelDB can by run and managed by our development instance itself - making getting started developing a lot easier. However, installing MongoDB isn't that difficult either :)
+The API speaks HTTP powered by the NodeJS library [express.js](http://expressjs.com/). For the database it uses MongoDB powered by the NodeJS library [Mongoose](http://mongoosejs.com/)
 
 ## Client
 [Documentation](http://thegame.erulabs.com/doc/client) (username: 'thegame', password: '123qweasd')
 
-Almost all of the actual "Game" lives here, which is deceptive because there is also a project called "Game". However, this is _everything_ that is sent to the browser. This includes _all_ HTML, CSS, UI, Models, Assets, Textures, etc. We layer on plenty of features here - LESS instead of CSS, Jade instead of HTML, image compression, added features to enhance browsers JavaScript support, etc. `gulp` will build this for you and compiled into the "build" directory.
+Almost all of the actual "Game" lives here, which is deceptive because there is also a project called "Game". However, this is _everything_ that is sent to the browser. This includes _all_ HTML, CSS, UI, Models, Assets, Textures, etc. We layer on plenty of features here - LESS instead of CSS, Jade instead of HTML, image compression, added features to enhance browsers JavaScript support, etc. `npm run build` will build this for you and compiled into the "build" directory.
 
 ## Dispatcher
 [Documentation](http://thegame.erulabs.com/doc/dispatcher) (username: 'thegame', password: '123qweasd')
@@ -71,4 +73,4 @@ The shared codebase is for two things:
 2. Helper functions. Basically small generic snippets of code we find ourselves needing across all the codebases. These should be kept very very small.
 
 ## Spec
-Contains the testing code for the project. `npm test` at the command prompt (as well as `gulp watch`) will run the tests against your code. Writing tests is how we know our code continues to work when we make changes to it later on! Writing tests is important! Write even MORE tests!
+Contains the testing code for the project. `npm run test` at the command prompt (as well as `npm run develop`) will run the tests against your code. Writing tests is how we know our code continues to work when we make changes to it later on! Writing tests is important! Write even MORE tests!
