@@ -1,13 +1,6 @@
 /* global NODE_ENV */
 'use strict';
 
-/** Load libraries */
-// const spawn = require('child_process').spawn;
-const express = require('express'),
-  request = require('request');
-
-//IOJS_OPTIONS = ['--harmony_classes', '--use_strict', '--es_staging'];
-
 /**
  * Represents a Dispatcher.
  * The Dispatcher is responsible for spawning GameServers and for reporting its health
@@ -17,7 +10,13 @@ const express = require('express'),
 class Dispatcher {
   constructor(options) {
     this.API_URI = options.API_URI;
-    this.app = express();
+    this.DISPATCHER_PORT = options.DISPATCHER_PORT;
+    this.express = require('express');
+    this.app = this.express();
+    this.request = require('request');
+
+    // Logger setup
+    this.log = require('winston');
 
     this.app.get('/test', function (req, res) {
       res.send('Hello testy world - Proof!');
@@ -30,9 +29,20 @@ class Dispatcher {
    * @returns {undefined}
    */
   register() {
-    request(`${this.API_URI}/test`, function (error, response, body) {
+    let self = this;
+    // Incoming hook for API to test functionality
+    self.app.post('/apiTest', function (req, res) {
+      res.status(200).send('OK');
+    });
+    self.request.post(`${this.API_URI}/dispatcher/register`, {
+      form: {
+        DISPATCHER_PORT: self.DISPATCHER_PORT
+      }
+    }, function (error, response, body) {
       if (!error && response.statusCode === 200) {
-        console.log(body);
+        self.log.info('Dispatcher registered successfully');
+      } else {
+        self.log.warn(`API REGISTER REQUEST FAILED - reply was: ${body}`);
       }
     });
   }
@@ -42,9 +52,9 @@ class Dispatcher {
    * Starts the Dispatchers HTTP server
    * @returns {undefined}
    */
-  listen(DISPATCHER_PORT) {
-    console.log(`Dispatcher starting. Env: "${NODE_ENV}". Listening on port: ${DISPATCHER_PORT}`);
-    this.app.listen(DISPATCHER_PORT);
+  listen() {
+    this.log.info(`Dispatcher starting. Env: "${NODE_ENV}". Listening on port: ${this.DISPATCHER_PORT}`);
+    this.app.listen(this.DISPATCHER_PORT);
   }
 
   /**

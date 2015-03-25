@@ -9,10 +9,11 @@ const DISPATCHER_PORT = process.env.npm_package_config_DISPATCHER_PORT || 8001,
 
 const DispatcherLib = require('./dispatcher.js');
 const Dispatcher = new DispatcherLib({
-  API_URI: `${API_SCHEME}://${API_HOST}:${API_PORT}`
+  API_URI: `${API_SCHEME}://${API_HOST}:${API_PORT}`,
+  DISPATCHER_PORT: DISPATCHER_PORT
 });
 
-Dispatcher.listen(DISPATCHER_PORT);
+Dispatcher.listen();
 Dispatcher.register();
 
 // let gameInstance;

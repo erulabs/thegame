@@ -11,10 +11,14 @@ class Api {
     this.express = require('express');
     this.bcrypt = require('bcryptjs');
 
+    // ExpressJS setup
     this.app = this.express();
     let bodyParser = require('body-parser');
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(bodyParser.json());
+
+    // Logger setup
+    this.log = require('winston');
 
     /** APIs loaded models will go here... eg: api.models.User... */
     this.models = {};
@@ -29,12 +33,19 @@ class Api {
    */
   init() {
     let self = this;
-    ['User'].forEach(function (model) {
+    // Load MODELS
+    [
+      'User'
+    ].forEach(function (model) {
       let Lib = require('./models/' + model + '.js');
       self.models[model] = Lib(self);
     });
-
-    ['User'].forEach(function (controller) {
+    // Load CONTROLLERS
+    [
+      'User',
+      'GameServer',
+      'Dispatcher'
+    ].forEach(function (controller) {
       let Lib = require('./controllers/' + controller + '.js')(self);
       self.controllers[controller] = new Lib();
     });
@@ -59,7 +70,7 @@ class Api {
    */
   listen(LISTEN_PORT) {
     // Start services
-    console.log(`API starting. Env: "${NODE_ENV}". Listening on port: ${LISTEN_PORT}`);
+    this.log.info(`API starting. Env: "${NODE_ENV}". Listening on port: ${LISTEN_PORT}`);
     this.app.listen(LISTEN_PORT);
   }
 
@@ -73,14 +84,13 @@ class Api {
     self.bcrypt.genSalt(10, function(err, salt) {
       self.bcrypt.hash(input, salt, function(err, hash) {
         if (err) {
-          console.log('Encryption error:', err);
+          self.log.info('Encryption error:', err);
           return false;
         }
         callback(hash);
       });
     });
   }
-
 }
 
 module.exports = Api;

@@ -4,7 +4,6 @@ const NODE_ENV = process.env.NODE_ENV || 'development',
   CLIENT_PORT = process.env.npm_package_config_CLIENT_PORT || 8080,
   API_PORT = process.env.npm_package_config_API_PORT || 8000,
   DISPATCHER_PORT = process.env.npm_package_config_DISPATCHER_PORT || 8001,
-  LIVERELOAD = process.env.npm_package_config_LIVERELOAD || true,
   ASSET_URL = process.env.npm_package_config_ASSET_URL || '/',
   IOJS_OPTIONS = ['--use_strict'],
   IOJS = `iojs ${IOJS_OPTIONS.join(' ')}`,
@@ -149,7 +148,7 @@ gulp.task('client:start', function () {
   connect.server({
     root: 'build/client',
     port: CLIENT_PORT,
-    livereload: LIVERELOAD,
+    livereload: true,
     middleware: function () {
       return [modRewrite([
         '^/api/(.*)$ http://localhost:' + API_PORT + '/$1 [P]'

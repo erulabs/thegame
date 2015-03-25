@@ -6,5 +6,5 @@ const GameClientLib = require('./game.js');
 global.GAME = new GameClientLib();
 
 angular.element(document).ready(function () {
-  global.GAME.beginScene('test');
+  global.GAME.beginScene('login');
 });
