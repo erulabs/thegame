@@ -44,8 +44,6 @@ UI.controller('LoginCtrl', function ($scope, $modal) {
       keyboard: false
     });
   };
-  $scope.loginScene = new LoginScene();
-  $scope.loginShow = true;
 });
 
 UI.controller('LoginWindowCtrl', function ($scope, $modal, $modalInstance, $http) {
@@ -68,7 +66,6 @@ UI.controller('LoginWindowCtrl', function ($scope, $modal, $modalInstance, $http
     }).success(function (data, status) {
       console.log(status, data);
       $scope.error = data;
-      $scope.loginShow = !$scope.loginShow;
       //$modalInstance.close();
       //global.GAME.beginScene('test');
     });
@@ -76,9 +73,6 @@ UI.controller('LoginWindowCtrl', function ($scope, $modal, $modalInstance, $http
   $scope.register = function () {
     $modalInstance.close();
     LoginScene.prototype.registerModal();
-  };
-  $scope.cancel = function () {
-    $modalInstance.close();
   };
 });
 
@@ -91,5 +85,3 @@ UI.controller('RegisterWindowCtrl', function ($scope, $modalInstance) {
 });
 
 module.exports = LoginScene;
-
-
