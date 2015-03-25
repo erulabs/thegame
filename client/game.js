@@ -23,6 +23,7 @@ class GameClient {
     /**
      * The registry for scenes - due to the usage of Browserify
      * one cannot use dynamic paths - instead, include any scene files here
+     * TODO: We use webpack now, we should just include all scenes all the time
      */
     this.sceneRegistry = {
       'login': require('./scenes/login.js'),

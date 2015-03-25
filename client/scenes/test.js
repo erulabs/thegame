@@ -101,9 +101,9 @@ class TestScene {
     this.objects.crate.position.z = -20;
 
 
-    let light = new THREE.PointLight(0xffffff, 0.8);
-    light.position.set(40, 40, 40);
-    GAME.scene.add(light);
+    this.light = new THREE.PointLight(0xffffff, 0.8);
+    this.light.position.set(40, 40, 40);
+    GAME.scene.add(this.light);
 
 
     let manager = new THREE.LoadingManager();
@@ -112,7 +112,6 @@ class TestScene {
     };
 
     let loader = new THREE.OBJMTLLoader(manager);
-
     // load a resource
     loader.load(
       // resource URL
@@ -123,8 +122,6 @@ class TestScene {
         GAME.scene.add( object );
       }
     );
-
-
     //let loader = new THREE.JSONLoader(manager);
     //// load a resource
     //loader.load(
@@ -137,11 +134,8 @@ class TestScene {
     //    GAME.scene.add(mesh);
     //  }
     //);
-
-
-
-
   }
+
   /**
    * @description
    * The core render loop - is called as fast as the browser can call it
@@ -151,6 +145,7 @@ class TestScene {
   render() {
 
   }
+
   /**
    * @description
    * The core game loop - is called evenly, once every GAME_TICK_INTERVAL ms
@@ -158,6 +153,7 @@ class TestScene {
    */
   tick() {
     this.objects.crate.rotation.x += 20;
+    this.light.position.y += 20;
   }
 }
 
