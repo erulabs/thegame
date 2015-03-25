@@ -17,6 +17,7 @@ module.exports = function (API) {
        * we'll add them to API.dispatchers
        */
       API.app.post('/dispatcher/register', function (req, res) {
+        // TODO: This is weird... That is all.
         let dispatcherIp = req.ip.replace('::ffff:', '');
         let thisDispatchersURI = `${dispatcherIp}:${req.body.DISPATCHER_PORT}`;
 

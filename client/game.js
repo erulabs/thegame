@@ -27,7 +27,8 @@ class GameClient {
      */
     this.sceneRegistry = {
       'login': require('./scenes/login.js'),
-      'test': require('./scenes/test.js')
+      'test': require('./scenes/test.js'),
+      'game': require('./scenes/game.js')
     };
 
     /** The object for the current game scene data */
