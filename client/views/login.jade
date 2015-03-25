@@ -14,8 +14,7 @@ div(data-ng-controller="LoginCtrl")
         .row.text-center
           input.btn.btn-primary(type="submit", value="Login")
           span &nbsp;
-          button.btn.btn-default(type="button", data-ng-click="register()") Register
-
+          button.btn.btn-default(type="button", data-ng-click="cancel()") Cancel
 
   script#registerModalContent(type="text/ng-template")
     .modal-header
@@ -26,3 +25,9 @@ div(data-ng-controller="LoginCtrl")
     .modal-footer
       button.btn.btn-default(data-ng-click="register()") Register
       button.btn.btn-primary(type="button", data-ng-click="cancel()") Cancel
+
+  div.login.text-center(ng-show="loginShow")
+      button.btn.btn-default(type="button", ng-click="loginScene.loginModal()") Log In
+      &nbsp
+      button.btn.btn-default(type="button", ng-click="loginScene.registerModal()") Register
+
