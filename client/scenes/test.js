@@ -99,6 +99,48 @@ class TestScene {
     floor.position.y = -6.5;
     this.objects.crate.position.x = -20;
     this.objects.crate.position.z = -20;
+
+
+    let light = new THREE.PointLight(0xffffff, 0.8);
+    light.position.set(40, 40, 40);
+    GAME.scene.add(light);
+
+
+    let manager = new THREE.LoadingManager();
+    manager.onProgress = function ( item, loaded, total ) {
+        console.log( 'LOADING MANAGER:', item, loaded, total );
+    };
+
+    let loader = new THREE.OBJMTLLoader(manager);
+
+    // load a resource
+    loader.load(
+      // resource URL
+      'assets/bridge.obj',
+      'assets/bridge.mtl',
+      // Function when resource is loaded
+      function ( object ) {
+        GAME.scene.add( object );
+      }
+    );
+
+
+    //let loader = new THREE.JSONLoader(manager);
+    //// load a resource
+    //loader.load(
+    //  // resource URL
+    //  'assets/bridge.js',
+    //  // Function when resource is loaded
+    //  function ( geometry ) {
+    //    let mesh = new THREE.Mesh(geometry,
+    //      new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture('assets/sky_s1.png')}));
+    //    GAME.scene.add(mesh);
+    //  }
+    //);
+
+
+
+
   }
   /**
    * @description
