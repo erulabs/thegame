@@ -6,7 +6,7 @@
  * @constructor
  */
 class Api {
-  constructor() {
+  constructor(config) {
     this.odm = require('mongoose');
     this.express = require('express');
     this.bcrypt = require('bcryptjs');
@@ -24,6 +24,16 @@ class Api {
     this.models = {};
     /** APIs loaded controllers will go here */
     this.controllers = {};
+
+    /** Dispatchers we're currently controlling go here */
+    this.dispatchers = {};
+    /** Game servers we're currently controlling go here */
+    this.gameServers = {};
+
+    // Periodically health check the dispathcers and game servers if configured to do so
+    if (config.healthCheckInterval) {
+      setInterval(this.healthCheck.bind(this), config.healthCheckInterval);
+    }
   }
 
   /**
@@ -34,21 +44,24 @@ class Api {
   init() {
     let self = this;
     // Load MODELS
-    [
-      'User'
+    [ 'User',
+      'GameServer',
+      'Dispatcher'
     ].forEach(function (model) {
       let Lib = require('./models/' + model + '.js');
       self.models[model] = Lib(self);
     });
     // Load CONTROLLERS
-    [
-      'User',
+    [ 'User',
       'GameServer',
       'Dispatcher'
     ].forEach(function (controller) {
       let Lib = require('./controllers/' + controller + '.js')(self);
       self.controllers[controller] = new Lib();
     });
+
+    // TODO: Load dispatchers from database and try to contact them to re-register
+    // TODO: Load gameservers from database and try to contact them via their dispatchers
   }
 
   /**
@@ -90,6 +103,20 @@ class Api {
         callback(hash);
       });
     });
+  }
+
+  /**
+   * @description
+   * Checks the health of all Dispatchers and Game servers
+   * Takes actions, like:
+   *  1. telling dispatchers to spawn additional processes
+   *  2. removing unhealthy/unresponsive dispatchers and game servers from the datastore
+   *  3. updates the static health report
+   * @returns {String}
+   */
+  healthCheck() {
+    this.log.info(`API healthCheck beginning`);
+    this.controllers.Dispatcher.healthCheckEvent();
   }
 }
 

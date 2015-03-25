@@ -15,7 +15,7 @@ describe('Dispatcher', function () {
     expect(mock.register).to.be.a('function');
     expect(mock.listen).to.be.a('function');
     expect(mock.spawnGame).to.be.a('function');
-    expect(mock.health).to.be.a('function');
+    expect(mock.healthCheckHandler).to.be.a('function');
   });
 });
 

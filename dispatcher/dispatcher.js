@@ -18,9 +18,7 @@ class Dispatcher {
     // Logger setup
     this.log = require('winston');
 
-    this.app.get('/test', function (req, res) {
-      res.send('Hello testy world - Proof!');
-    });
+    this.app.get('/healthCheck', this.healthCheckHandler);
   }
 
   /**
@@ -71,8 +69,8 @@ class Dispatcher {
    * Reports on the dispatchers health
    * @returns {undefined}
    */
-  health() {
-
+  healthCheckHandler(req, res) {
+    res.send('Hello testy world - Proof!');
   }
 }
 module.exports = Dispatcher;
