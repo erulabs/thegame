@@ -1,18 +1,10 @@
-/* global angular, io, THREE, document, requestAnimationFrame, window, location */
+/* global angular, io, THREE, document, requestAnimationFrame, window */
 'use strict';
 
 /** load user model */
 // const User = require('./models/User.js');
 /** Interval in MS between game logic ticks */
 const GAME_TICK_INTERVAL = 200;
-global.UI = angular.module('thegame', ['ngCookies', 'ui.bootstrap']);
-
-global.UI.getParameterByName = function (name) {
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
-      results = regex.exec(location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-};
 
 /** Represents a GameClient. */
 class GameClient {
@@ -20,18 +12,23 @@ class GameClient {
   constructor() {
     let self = this;
 
-    /**
-     * The registry for scenes - due to the usage of Browserify
-     * one cannot use dynamic paths - instead, include any scene files here
-     * TODO: We use webpack now, we should just include all scenes all the time
-     */
-    this.sceneRegistry = {
-      'login': require('./scenes/login.js'),
-      'test': require('./scenes/test.js'),
-      'game': require('./scenes/game.js')
-    };
+    /** Import some helper functions */
+    this.helpers = require('./helpers.js');
 
-    /** The object for the current game scene data */
+    /** Angular app */
+    this.ui = angular.module('thegame', ['ngCookies', 'ui.bootstrap']);
+
+    /** An object which contains all the scene objects */
+    this.sceneRegistry = {};
+    /** A list of scene files to load */
+    [ 'login',
+      'test',
+      'game'
+    ].forEach(function (scene) {
+      self.sceneRegistry[scene] = require('./scenes/' + scene + '.js')(self);
+    });
+
+    /** A mock scene - sceneData is re-referenced to the current running scene during .beginScene() */
     this.sceneData = {
       render: function () {},
       tick: function() {},

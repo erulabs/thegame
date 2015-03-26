@@ -277,7 +277,7 @@ gulp.task('client_assets', function () {
   // TODO: Compress images?
   // TODO: Compress models?
   // TODO: Automatically upload to a CDN?
-  return gulp.src('./client/assets/*')
+  return gulp.src('./client/assets/**/*')
     .pipe(gulp.dest('build/client/assets'))
     .pipe(connect.reload())
     .on('error', function (err) {
