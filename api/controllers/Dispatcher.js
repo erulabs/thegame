@@ -2,8 +2,8 @@
 
 const request = require('request');
 
-module.exports = function (API) {
-  const Dispatcher = API.models.Dispatcher;
+module.exports = function (api) {
+  const Dispatcher = api.models.Dispatcher;
 
   /**
    * Dispatcher controller class
@@ -14,9 +14,9 @@ module.exports = function (API) {
 
       /**
        * Dispatcher registration route - Dispatchers 'signup' here - if they work as expected,
-       * we'll add them to API.dispatchers
+       * we'll add them to api.dispatchers
        */
-      API.app.post('/dispatcher/register', function (req, res) {
+      api.app.post('/dispatcher/register', function (req, res) {
         // TODO: This is weird... That is all.
         let dispatcherIp = req.ip.replace('::ffff:', '');
         let thisDispatchersURI = `${dispatcherIp}:${req.body.DISPATCHER_PORT}`;
@@ -34,7 +34,7 @@ module.exports = function (API) {
               'token': 'SOME_DISPATCHER_TOKEN'
             }).send('OK');
           } else {
-            API.log.warn(`DISPATCHER FAILED REQUEST to http://${thisDispatchersURI}/apiTest - reply was: ${body}`);
+            api.log.warn(`DISPATCHER FAILED REQUEST to http://${thisDispatchersURI}/apiTest - reply was: ${body}`);
             res.status(500).send({ error: 'Failed to communicate back to the dispatchers http server' });
           }
         });
@@ -47,11 +47,11 @@ module.exports = function (API) {
      * @returns {undefined}
      */
     healthCheckEvent() {
-      API.log.info('dispatcher controller health check starting');
+      api.log.info('dispatcher controller health check starting');
       Dispatcher.find({}, function (err, dispatchers) {
-        API.log.info('health report:', dispatchers.length);
+        api.log.info('health report:', dispatchers.length);
         for (let dispatcher of dispatchers) {
-          API.log.info(dispatcher.uri);
+          api.log.info(dispatcher.uri);
         }
       });
     }

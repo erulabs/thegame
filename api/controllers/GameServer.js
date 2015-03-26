@@ -1,10 +1,10 @@
 'use strict';
 
-module.exports = function (API) {
+module.exports = function (api) {
 
   class GameServerController {
     constructor() {
-      API.app.post('/gameserver/register', function () {
+      api.app.post('/gameserver/register', function () {
 
       });
     }

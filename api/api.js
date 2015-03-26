@@ -10,6 +10,9 @@ class Api {
     this.odm = require('mongoose');
     this.express = require('express');
     this.bcrypt = require('bcryptjs');
+    this.uuid = require('node-uuid').v4;
+
+    this.ENC_SALT = config.ENC_SALT;
 
     // ExpressJS setup
     this.app = this.express();
@@ -94,14 +97,12 @@ class Api {
    */
   encrypt(input, callback) {
     let self = this;
-    self.bcrypt.genSalt(10, function(err, salt) {
-      self.bcrypt.hash(input, salt, function(err, hash) {
-        if (err) {
-          self.log.info('Encryption error:', err);
-          return false;
-        }
-        callback(hash);
-      });
+    self.bcrypt.hash(input, self.ENC_SALT, function(err, hash) {
+      if (err) {
+        self.log.info('Encryption error:', err);
+        return false;
+      }
+      callback(hash);
     });
   }
 

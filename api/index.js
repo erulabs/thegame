@@ -10,7 +10,8 @@ if (CONFIG.API_PORT === undefined) {
 
 const ApiLib = require('./api.js');
 const Api = new ApiLib({
-  healthCheckInterval: 60000
+  healthCheckInterval: 60000,
+  ENC_SALT: '$2a$10$yfWHFm6n.iNy8aO3aOVrJu'
 });
 
 Api.attachDB(CONFIG.db, function () {

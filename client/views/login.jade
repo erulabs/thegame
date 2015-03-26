@@ -4,7 +4,8 @@ div(data-ng-controller="LoginCtrl")
       h3.modal-title Login to TheGame
     .modal-body
       .alert.alert-warning.text-center.col-md-8.col-md-offset-2(data-ng-show="error") {{ error }}
-      form(method="post", action="/api/user/login", enctype='application/json')
+      .alert.alert-warning.text-center.col-md-8.col-md-offset-2(data-ng-show="regError") {{ regError }}
+      form(enctype='application/json', data-ng-submit="login()")
         .row
           .form-group.col-md-6.col-md-offset-3
             input(type="email", class="form-control", placeholder="Email", name='email', data-ng-model="email")
@@ -12,17 +13,30 @@ div(data-ng-controller="LoginCtrl")
           .form-group.col-md-6.col-md-offset-3
             input(type="password", class="form-control", placeholder="Password", name='password', data-ng-model="password")
         .row.text-center
-          input.btn.btn-primary(type="submit", value="Login")
+          input.btn.btn-primary(type="submit", value="Login", data-ng-click="login()")
           span &nbsp;
-          button.btn.btn-default(type="button", data-ng-click="register()") Register
+          button.btn.btn-default(type="button", data-ng-click="register()") Sign up
 
 
   script#registerModalContent(type="text/ng-template")
-    .modal-header
+    .modal-header.text-center
       h3.modal-title Signup for TheGame
     .modal-body
-      div Sorry, we're not accepting sign ups at this time
-      div Make sure to check back later!
-    .modal-footer
-      button.btn.btn-default(data-ng-click="register()") Register
-      button.btn.btn-primary(type="button", data-ng-click="cancel()") Cancel
+      .alert.alert-warning.text-center.col-md-8.col-md-offset-2(data-ng-show="error") {{ error }}
+      form(enctype='application/json', data-ng-submit="register()")
+        .row
+          .form-group.col-md-6.col-md-offset-3
+            input(type="text", class="form-control", placeholder="Desired Username", name='username', data-ng-model="username")
+        .row
+          .form-group.col-md-6.col-md-offset-3
+            input(type="email", class="form-control", placeholder="Email", name='email', data-ng-model="email")
+        .row
+          .form-group.col-md-6.col-md-offset-3
+            input(type="password", class="form-control", placeholder="Password", name='password', data-ng-model="password")
+        .row
+          .form-group.col-md-6.col-md-offset-3
+            input(type="password", class="form-control", placeholder="Confirm password", name='cpassword', data-ng-model="cpassword")
+        .row.text-center
+          input.btn.btn-primary(type="submit", data-ng-click="register()", value="Register")
+          span &nbsp;
+          button.btn.btn-default(type="button", data-ng-click="cancel()") Cancel

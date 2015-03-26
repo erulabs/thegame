@@ -15,8 +15,11 @@ class GameClient {
     /** Import some helper functions */
     this.helpers = require('./helpers.js');
 
+    /** Contains the auth info we'll use to communicate with the API */
+    this.session = {};
+
     /** Angular app */
-    this.ui = angular.module('thegame', ['ngCookies', 'ui.bootstrap']);
+    this.ui = angular.module('thegame', ['ui.bootstrap']);
 
     /** An object which contains all the scene objects */
     this.sceneRegistry = {};
