@@ -18,11 +18,13 @@ That's all  folks!
 ## Working
 A. Boot into development: `npm run develop`, browse to: [localhost:8080](http://localhost:8080)
 
-B. Build project: `npm run build`
+B. Boot into development against a local MongoDB instance: `npm run local-develop`
 
-C. Run tests: `npm run test`
+C. Build project: `npm run build`
 
-D. Audit your code: `npm run lint`
+D. Run tests: `npm run test`
+
+E. Audit your code: `npm run lint`
 
 ## JS development tips
 1. Use [Chrome Canary](https://www.google.com/chrome/browser/canary.html) and install the [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) plugin

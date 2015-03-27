@@ -73,7 +73,12 @@ class Api {
    * @returns {undefined}
    */
   attachDB(DB_CONFIG, callback) {
-    this.odm.connect(`mongodb://${DB_CONFIG.username}:${DB_CONFIG.password}@${DB_CONFIG.uri}`);
+    let uri = `mongodb://${DB_CONFIG.uri}`;
+    this.log.info(`Starting DB connection to ${uri}`);
+    if (DB_CONFIG.username !== undefined && DB_CONFIG.password !== undefined) {
+      uri = `mongodb://${DB_CONFIG.username}:${DB_CONFIG.password}@${DB_CONFIG.uri}`;
+    }
+    this.odm.connect(uri);
     this.db = this.odm.connection;
     this.db.on('error', console.error.bind(console, 'connection error:'));
     this.db.once('open', callback);

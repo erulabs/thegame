@@ -16,6 +16,7 @@
     "start": "npm run restart:dispatcher && npm run restart:api",
     "watch": "node node_modules/gulp/bin/gulp watch",
     "develop": "npm run watch",
+    "local-develop": "NODE_ENV='local' npm run watch",
     "lint": "node node_modules/gulp/bin/gulp lint"
   },
   "config": {
@@ -66,7 +67,7 @@
     "bcryptjs": "^2.1.0",
     "body-parser": "^1.12.2",
     "express": "^4.12.2",
-    "mongoose": "^3.8.25",
+    "mongoose": "git+http://github.com/Automattic/mongoose",
     "node-uuid": "^1.4.3",
     "pm2": "^0.12.7",
     "request": "^2.53.0",

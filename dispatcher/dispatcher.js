@@ -40,7 +40,7 @@ class Dispatcher {
       if (!error && response.statusCode === 200) {
         self.log.info('Dispatcher registered successfully');
       } else {
-        self.log.warn(`API REGISTER REQUEST FAILED - reply was: ${body}`);
+        self.log.warn(`API REGISTER REQUEST FAILED - reply was: ${body}`, error);
       }
     });
   }

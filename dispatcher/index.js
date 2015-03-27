@@ -14,7 +14,18 @@ const Dispatcher = new DispatcherLib({
 });
 
 Dispatcher.listen();
-Dispatcher.register();
+
+// In development, the dispatcher and the API often restart rapidly
+// We'll delay the registration just slightly so that the API has time to get booted.
+// In production, we expect the API to have 99.9999% uptime, and thus should register
+// ASAP.
+if (global.NODE_ENV === 'local' || global.NODE_ENV === 'development') {
+  setTimeout(function () {
+    Dispatcher.register();
+  }, 1000);
+} else {
+  Dispatcher.register();
+}
 
 // let gameInstance;
 // if (gameInstance) {

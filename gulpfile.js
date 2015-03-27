@@ -360,9 +360,8 @@ gulp.task('watch', function () {
   seq('clean', defaultTasks, 'test', [
     'jsdoc',
     'api:start',
-    'dispatcher:start',
     'client:start'
-  ], function () {
+  ], 'dispatcher:start', function () {
     watch(gameFiles, function () { seq('babel:game', ['test:game', 'lint', 'dispatcher:start', 'jsdoc:game']); });
     watch(apiFiles, function () { seq('babel:api', ['test:api', 'lint', 'api:start', 'jsdoc:api']); });
     watch(dispatcherFiles, function () { seq('babel:dispatcher', [

@@ -7,6 +7,11 @@ module.exports = {
       'password': 'neif6eereush2aedoaSh',
       'uri': 'ds055210.mongolab.com:55210/thegame-dev'
     }
+  },
+  'local': {
+    'db': {
+      'uri': 'localhost/thegame-dev'
+    }
   }
 };
 
